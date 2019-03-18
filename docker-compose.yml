@@ -1,0 +1,23 @@
+version: '2'
+
+services:
+
+  game:
+    build:
+      context: ./game
+    ports:
+      - "8080:80"
+    volumes:
+      - ./logs:/src/logs
+    command: node --prof --logfile=logs/game.log index.js
+
+  profiler:
+    image: pierreinglebert/flamegraph-server
+    ports:
+      - "80:80"
+    volumes:
+      - ./logs:/src/logs
+
+  autocannon:
+    build:
+      context: ./autocannon
